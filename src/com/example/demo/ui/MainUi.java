@@ -43,13 +43,13 @@ public class MainUi {
     void home() {
         int sel;
         System.out.print("""
-                !! Welcome !!
+                !! 어서와라 !!
                                 
-                1. Sign up
-                2. Login
-                3. Member List
-                4. Who logged in?
-                5. Sign out
+                1. 회원가입
+                2. 로그인
+                3. 회원목록
+                4. 로그인 회원보기
+                5. 로그아웃
                 0. Quit
                                 
                 >\s""");
