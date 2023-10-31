@@ -26,23 +26,5 @@ public class MemberService {
         return List.copyOf(memberRepository);
     }
 
-    public boolean serverUsername(String username) {
-        for (var eachMember : memberRepository) {
-            boolean exists = Objects.equals(eachMember.username, username);// 회원가입시 동일한 유저닉네임이 있을시 false로 판별.
-            if (exists) {
-                return true;
-            }
-        }
-        return false;
-    }
 
-    public boolean serverNickname(String nickname) {
-        for (var eachMember : memberRepository) {
-            boolean exists = Objects.equals(eachMember.nickname, nickname);
-            if (exists) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
