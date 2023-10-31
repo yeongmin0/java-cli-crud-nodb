@@ -22,7 +22,8 @@ public class MainUi {
 
     public void run() {
         // 반복문에 Label 달면 -> break, continue 할 때 중첩 반복문 중에서 어느 반복문을 break/continue 할지 선택 가능.
-        mainLoop: while (true) {
+        mainLoop:
+        while (true) {
             switch (path) {
                 case HOME -> home();
                 case SIGN_UP -> signUp();
@@ -45,13 +46,13 @@ public class MainUi {
         int sel;
         System.out.print("""
                 !! Welcome !!
-                
+                                
                 1. Sign up
                 2. Login
                 3. Member List
                 4. Who logged in?
                 0. Quit
-                
+                                
                 >\s""");
         sel = scanner.nextInt();
         scanner.nextLine(); // flush buff
@@ -64,7 +65,7 @@ public class MainUi {
             case 0 -> Path.QUIT;
             default -> {
                 System.out.println("Choose one of above numbers.");
-                yield  Path.HOME; // switch문의 반환값 같은 역할.
+                yield Path.HOME; // switch문의 반환값 같은 역할.
             }
         };
     }
@@ -115,5 +116,28 @@ public class MainUi {
 
         path = Path.HOME;
     }
+
+    private boolean serverByUsername(String username) {
+        boolean serverExists = memberService.serverUsername(username);
+
+        if (serverExists) {
+            System.out.println("이미 닉네임이 존재합니다.");
+        }
+        return serverExists;
+
+
+    }
+
+    private boolean serverBynickname(String nickname) {
+        boolean serverExists = memberService.serverNickname(nickname);
+
+        if (serverExists) {
+            System.out.println("이미 풀네임이 존재합니다.");
+        }
+        return serverExists;
+    }
+
+    // [1] 서버안에서 회원가입을 할시.
+    // [2] 같은 닉네임(완료) , 풀네임 ,이 있을시 true / false 가 나오도록 할 것이다.
 
 }
