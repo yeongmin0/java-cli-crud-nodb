@@ -28,6 +28,7 @@ public class MainUi {
                 case HOME -> home();
                 case SIGN_UP -> signUp();
                 case SIGN_IN -> {
+                    singIn();
                 }
                 case SIGN_OUT -> {
                 }
@@ -47,9 +48,9 @@ public class MainUi {
         System.out.print("""
                 !! Welcome !!
                                 
-                1. Sign up
-                2. Login
-                3. Member List
+                1. 회원가입
+                2. 로그인
+                3. 접속회원 리스트
                 4. Who logged in?
                 0. Quit
                                 
@@ -76,23 +77,64 @@ public class MainUi {
         String nickname;
 
         System.out.println(" !! Register Your Account !!");
+        do {
+            System.out.println("Username");
+            System.out.print("> ");
+            username = scanner.nextLine().strip();
 
-        System.out.println("Username");
-        System.out.print("> ");
-        username = scanner.nextLine().strip();
+        } while (serverByUsername(username));
+
 
         System.out.println("password");
         System.out.print("> ");
         password = scanner.nextLine().strip();
+        do {
 
-        System.out.println("nickname");
-        System.out.print("> ");
-        nickname = scanner.nextLine().strip();
+            System.out.println("nickname");
+            System.out.print("> ");
+            nickname = scanner.nextLine().strip();
+        } while (serverBynickname(nickname));
+
+        Member savedMember = memberService.signUp(username, password, nickname);
+
+        if (savedMember == null) {
+            System.out.println("존재함.");
+        }
 
         // TODO register account with member service.
 
         path = Path.HOME;
     }
+
+
+    void singIn() {
+        String username;
+        String password;
+
+        System.out.println("로그인을 해주세요");
+        System.out.println(">");
+
+
+        System.out.println("아이디를 입력해주세요");
+        System.out.println(">");
+        username = scanner.nextLine().strip();
+
+
+        System.out.println("비밀번호를 입력해주세요");
+        System.out.println(">");
+        password = scanner.nextLine().strip();
+
+        loginMember = memberService.singIn(username, password);
+
+        if (loginMember == null) {
+            System.out.println("아이디 비밀번호 중 틀린게 존재합니다.");
+        }
+        path = Path.HOME;
+
+    }
+    // [1] 로그인을 할때. 아이디 /비밀번호를 작성하는 것을 만들꺼고
+    // [2] 로그인을 할시 같은 아이디가 나올때는 false 존재하지 않는 아이디가 있을떄는 true 로 나오게할 것이다
+    // [3] 회원가입과 같이 do~while 문을 사용 할 것 같다.
 
     void memberList() {
         List<Member> members = memberService.getAllMembers();
@@ -136,6 +178,14 @@ public class MainUi {
         }
         return serverExists;
     }
+
+//    private boolean serverBypassword(String password) {
+//        boolean serverExists = memberService.serverPassword(password);
+//        if (serverExists) {
+//            System.out.println("비밀번호가 다릅니다");
+//        }
+//        return serverExists;
+//    }
 
     // [1] 서버안에서 회원가입을 할시.
     // [2] 같은 닉네임(완료) , 풀네임 ,이 있을시 true / false 가 나오도록 할 것이다.
