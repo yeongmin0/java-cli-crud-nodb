@@ -44,12 +44,12 @@ public class MainUi {
     void home() {
         int sel;
         System.out.print("""
-                !! Welcome !!
-                
-                1. Sign up
-                2. Login
-                3. Member List
-                4. Who logged in?
+                 !! Welcome !!
+                                
+                1. 회원가입
+                2. 로그인
+                3. 회원리스트
+                4. 접속중인 리스트
                 0. Quit
                 
                 >\s""");
@@ -115,4 +115,28 @@ public class MainUi {
 
         path = Path.HOME;
     }
+
+    // 회원내에 같은 닉네임/풀네임이 있는지 판별하고 알려주는 기능.
+    private boolean serverByUsername(String username) {
+        boolean serverExists = memberService.serverUsername(username);
+
+        if (serverExists) {
+            System.out.println("이미 닉네임이 존재합니다.");
+        }
+        return serverExists;
+
+
+    }
+
+    private boolean serverBynickname(String nickname) {
+        boolean serverExists = memberService.serverNickname(nickname);
+
+        if (serverExists) {
+            System.out.println("이미 풀네임이 존재합니다.");
+        }
+        return serverExists;
+    }
+
+    // [1] 서버안에서 회원가입을 할시.
+    // [2] 같은 닉네임(완료) , 풀네임 ,이 있을시 true / false 가 나오도록 할 것이다.
 }
